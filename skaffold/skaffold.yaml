@@ -1,0 +1,58 @@
+apiVersion: skaffold/v2beta4
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ../k8s/*
+build:
+  local:
+    push: true
+  artifacts:
+    - image: jagannathrk/client
+      context: ../app/client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: jagannathrk/comments
+      context: ../app/comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual: 
+          - src: '*.js'
+            dest: .
+    - image: jagannathrk/event-bus
+      context: ../app/event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: jagannathrk/moderation
+      context: ../app/moderation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: jagannathrk/posts
+      context: ../app/posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: jagannathrk/query
+      context: ../app/query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
